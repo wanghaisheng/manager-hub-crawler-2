@@ -1,6 +1,6 @@
 import { utils } from 'crawlee'
-import moment from 'moment/moment'
-import type { Page } from 'puppeteer'
+import {Page} from "playwright";
+import moment from "moment";
 
 export const UtilService = {
   log: (message: string, data?: Record<string, any> | null) => {
@@ -15,7 +15,7 @@ export const UtilService = {
     UtilService.log('스냅샷 촬영 시작')
     await utils.puppeteer.saveSnapshot(page, { key: `${key}--${new Date().getTime()}`, saveHtml: true })
     UtilService.log('스냅샷 촬영 완료')
-    const pages = await page.browser().pages()
+    const pages = ( page.context()).pages()
     UtilService.log(`pages.length: ${pages.length}`)
     UtilService.log(`pages: \n${pages.map((value, index) => `[${index}] ${value.url()}`).join('\n')}`)
   }
