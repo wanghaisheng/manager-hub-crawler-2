@@ -1,4 +1,4 @@
-import { createPlaywrightRouter } from 'crawlee';
+import {createPlaywrightRouter, enqueueLinks} from 'crawlee';
 import {CONSTANTS} from "./CONSTANTS.js";
 import {checkLoginStatus} from "./checkLoginStatus.js";
 import {UtilService} from "./utilService.js";
@@ -53,7 +53,7 @@ router.addHandler('detail', async ({ request, page, log, pushData }) => {
     });
 });
 
-router.addHandler('login', async ({ request, page, log, pushData }) => {
+router.addHandler('login', async ({ request, page, log, pushData,enqueueLinks }) => {
     log.info('login 핸들러 실행');
     await UtilService.snapshot(page, 'loginHandler');
     const title = await page.title();
@@ -81,4 +81,24 @@ router.addHandler('login', async ({ request, page, log, pushData }) => {
     UtilService.log('login success')
     await UtilService.snapshot(page, 'login-success')
 
+    await enqueueLinks({
+        globs: ['/sschkiss'],
+        label: 'shop-list',
+    })
+
 });
+
+router.addHandler('shop-list', async (context) => {
+    UtilService.log('shop-list 핸들러')
+    await UtilService.snapshot(context.page, 'shop-list');
+
+
+    await context.enqueueLinks({
+        globs: ['/sschkiss/[0-9]*'  ],
+        label: 'shop-detail',
+    });
+})
+router.addHandler('shop-detail', async (context) => {
+    UtilService.log('shop-detail 핸들러')
+    await UtilService.snapshot(context.page, 'shop-detail');
+})

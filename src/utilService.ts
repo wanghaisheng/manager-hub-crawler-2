@@ -11,9 +11,10 @@ export const UtilService = {
     await utils.sleep(ms)
     UtilService.log('sleep end')
   },
-  snapshot: async (page: Page, key: string) => {
+  snapshot: async (page: Page, key?: string) => {
     UtilService.log('스냅샷 촬영 시작')
-    await utils.puppeteer.saveSnapshot(page, { key: `${key}--${new Date().getTime()}`, saveHtml: true })
+    const title = await page.title();
+    await utils.puppeteer.saveSnapshot(page, { key: `${new Date().getTime()}---${title}---${key}`, saveHtml: true })
     UtilService.log('스냅샷 촬영 완료')
     const pages = ( page.context()).pages()
     UtilService.log(`pages.length: ${pages.length}`)
