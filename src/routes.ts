@@ -26,8 +26,8 @@ router.addDefaultHandler(async ({ enqueueLinks, log ,page}) => {
         // });
     }else{
         await enqueueLinks({
-            globs: ['/sschkiss'],
-            label: 'shops',
+            globs: ['**/sschkiss'],
+            label: 'shop-list',
         });
     }
 
@@ -82,7 +82,7 @@ router.addHandler('login', async ({ request, page, log, pushData,enqueueLinks })
     await UtilService.snapshot(page, 'login-success')
 
     await enqueueLinks({
-        globs: ['/sschkiss'],
+        globs: ['**/sschkiss'],
         label: 'shop-list',
     })
 
@@ -94,7 +94,7 @@ router.addHandler('shop-list', async (context) => {
 
 
     await context.enqueueLinks({
-        globs: ['/sschkiss/[0-9]*'  ],
+        globs: ['**/sschkiss/[0-9]*'  ],
         label: 'shop-detail',
     });
 })
