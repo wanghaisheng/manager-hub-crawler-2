@@ -63,4 +63,18 @@ router.addHandler('login', async ({ request, page, log, pushData }) => {
         url: request.loadedUrl,
         title,
     });
+
+    UtilService.log(`UA: ${( page.context()?.browser()?.contexts())}`)
+    const ID = 'test211016'
+    const PW = 'dltnwjd8'
+
+    await page.solveRecaptchas()
+    await page.fill('#uid', ID)
+    await page.fill('#upw', PW)
+
+    await page.click('.submit.btn');
+    UtilService.log('Submit search form')
+    await page.waitForURL('**\/main*')
+    UtilService.log('login success')
+
 });
