@@ -10,6 +10,7 @@ import {chromium} from "playwright-extra";
 import puppeteerExtraPluginStealth from 'puppeteer-extra-plugin-stealth'
 import puppeteerExtraPluginRecaptcha from 'puppeteer-extra-plugin-recaptcha'
 import puppeteerExtraPluginAnonymizeUa from 'puppeteer-extra-plugin-anonymize-ua'
+import {CONSTANTS} from "./CONSTANTS.js";
 
 
 // Load the stealth plugin and use defaults (all tricks to hide playwright usage)
@@ -29,13 +30,15 @@ chromium.use(
 )
 
 
-const startUrls = ['https://crawlee.dev'];
+const startUrls = [CONSTANTS.BASE_URL];
 
 const crawler = new PlaywrightCrawler({
     // proxyConfiguration: new ProxyConfiguration({ proxyUrls: ['...'] }),
     requestHandler: router,
     // Comment this option to scrape the full website.
-    maxRequestsPerCrawl: 20,
+    maxRequestsPerCrawl: 3,
+    maxConcurrency: 1,
+    maxRequestsPerMinute:10,
     launchContext: {
         launcher: chromium,
         launchOptions: {
