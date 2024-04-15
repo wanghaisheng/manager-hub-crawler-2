@@ -13,9 +13,11 @@ router.addDefaultHandler(async ({ enqueueLinks, log ,page}) => {
 
     const loginStatus =  await checkLoginStatus(page);
 
+    UtilService.log('loginStatus', {loginStatus});
+
     if(loginStatus === 'logouted'){
         await enqueueLinks({
-            globs: [new URL('/index.php?mid=main_04&amp;act=dispMemberLoginForm', CONSTANTS.BASE_URL).href],
+            globs: ['**/*?*act=dispMemberLoginForm*'],
             label: 'login',
         })
         // await enqueueLinks({
