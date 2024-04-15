@@ -5,13 +5,13 @@ import {UtilService} from "./utilService.js";
 
 export const router = createPlaywrightRouter();
 
-router.addDefaultHandler(async ({ enqueueLinks, log ,page, injectJQuery}) => {
+router.addDefaultHandler(async ({ enqueueLinks, log ,page}) => {
     log.info(`enqueueing new URLs`);
     await UtilService.snapshot(page, 'defaultHandler');
 
 
 
-    const loginStatus =  await checkLoginStatus(page, injectJQuery);
+    const loginStatus =  await checkLoginStatus(page);
 
     if(loginStatus === 'logouted'){
         await enqueueLinks({
