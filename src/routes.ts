@@ -68,7 +68,10 @@ router.addHandler('login', async ({ request, page, log, pushData }) => {
     const ID = 'test211016'
     const PW = 'dltnwjd8'
 
+    UtilService.log('Solve recaptcha')
     await page.solveRecaptchas()
+    UtilService.log('Solve recaptcha done')
+    UtilService.log('Fill ID and PW')
     await page.fill('#uid', ID)
     await page.fill('#upw', PW)
 
