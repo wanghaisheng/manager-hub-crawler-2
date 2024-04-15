@@ -79,6 +79,6 @@ router.addHandler('login', async ({ request, page, log, pushData }) => {
     UtilService.log('Submit search form')
     await page.waitForURL('**\/main*')
     UtilService.log('login success')
-    UtilService.snapshot(page, 'login-success')
+    await UtilService.snapshot(page, 'login-success')
 
 });
