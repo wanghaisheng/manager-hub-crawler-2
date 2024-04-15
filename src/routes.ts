@@ -1,11 +1,13 @@
 import { createPlaywrightRouter } from 'crawlee';
 import {CONSTANTS} from "./CONSTANTS.js";
 import {checkLoginStatus} from "./checkLoginStatus.js";
+import {UtilService} from "./utilService.js";
 
 export const router = createPlaywrightRouter();
 
 router.addDefaultHandler(async ({ enqueueLinks, log ,page, injectJQuery}) => {
     log.info(`enqueueing new URLs`);
+    await UtilService.snapshot(page, 'defaultHandler');
 
 
 
@@ -51,6 +53,7 @@ router.addHandler('detail', async ({ request, page, log, pushData }) => {
 
 router.addHandler('login', async ({ request, page, log, pushData }) => {
     log.info('login 핸들러 실행');
+    await UtilService.snapshot(page, 'loginHandler');
     const title = await page.title();
     log.info(`${title}`, { url: request.loadedUrl });
 
