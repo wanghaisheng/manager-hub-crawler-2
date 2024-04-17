@@ -39,6 +39,7 @@ const crawler = new PlaywrightCrawler({
     maxRequestsPerCrawl: 100,
     maxConcurrency: 1,
     maxRequestsPerMinute:10,
+    requestHandlerTimeoutSecs: 180,
 
     launchContext: {
         launcher: chromium,

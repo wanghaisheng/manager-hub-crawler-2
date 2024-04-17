@@ -15,7 +15,13 @@ export const UtilService = {
     UtilService.log('스냅샷 촬영 시작')
     // const title = await page.title();
     const title = ''
-    await utils.puppeteer.saveSnapshot(page, { key: `${new Date().getTime()}---${title}---${key}`, saveHtml: true })
+
+    // format current time to nice readable string with moment. but no blank space in the string. format is 'YYYY-MM-DDTHH:mm:ss'
+    const currentTimeInIsoString = moment().toISOString();
+
+
+
+    await utils.puppeteer.saveSnapshot(page, { key: `${currentTimeInIsoString}---${title}---${key}`, saveHtml: true })
     UtilService.log('스냅샷 촬영 완료')
     const pages = ( page.context()).pages()
     UtilService.log(`pages.length: ${pages.length}`)

@@ -12,10 +12,15 @@ function matchGlob(url:string, glob:string): boolean {
     return regex.test(url);
 }
 
+// function that check match glob but input glob is list. and return true if match any glob pattern
+function matchGlobs(url:string, globs:string[]): boolean {
+    return globs.some(glob => matchGlob(url, glob));
+}
+
 router.use(async (ctx) => {
 
 
-    if(matchGlob(ctx.request.url, '**/sschkiss')){
+    if(matchGlobs(ctx.request.url, ['**/sschkiss', '**/sschkiss/[0-9]*'])){
         // log that match what glob pattern with what url
         UtilService.log('match', {url: ctx.request.url, glob: '**/sschkiss'});
 
