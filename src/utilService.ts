@@ -24,8 +24,9 @@ export const UtilService = {
     // const title = await page.title();
     const title = ''
 
-    // format current time to nice readable string with moment. but no blank space in the string. format is 'YYYY-MM-DDTHH:mm:ss'
-    const currentTimeInIsoString = moment().toISOString();
+    // format current time to nice readable string with moment. but no blank space in the string. format is 'YYYY-MM-DDTHH_mm_ss'
+    const currentTimeInIsoString =
+        moment().format('YYYY-MM-DDTHH_mm_ss')
 
 
     // set counter indicater
