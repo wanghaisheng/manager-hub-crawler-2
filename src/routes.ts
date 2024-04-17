@@ -5,6 +5,27 @@ import {UtilService} from "./utilService.js";
 
 export const router = createPlaywrightRouter();
 
+
+// function that check input url string match glob pattern or not. input two argument string that url and glob pattern, return boolean
+function matchGlob(url:string, glob:string): boolean {
+    const regex = new RegExp(`^${glob.split('*').join('.*')}$`);
+    return regex.test(url);
+}
+
+router.use(async (ctx) => {
+
+
+    if(matchGlob(ctx.request.url, '**/sschkiss')){
+        // log that match what glob pattern with what url
+        UtilService.log('match', {url: ctx.request.url, glob: '**/sschkiss'});
+
+        // delay 30s
+        await UtilService.sleep(30000);
+    }
+
+
+});
+
 router.addDefaultHandler(async ({ enqueueLinks, log ,page}) => {
     log.info(`enqueueing new URLs`);
     await UtilService.snapshot(page, 'defaultHandler');
