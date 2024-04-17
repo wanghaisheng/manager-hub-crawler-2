@@ -13,11 +13,15 @@ phases:
       - rm -rf ./__tests__
       # Remove all dependencies not needed for the Lambda deployment package (the packages from devDependencies in package.json)
       - npm prune --production
+      - echo "Pre-build phase complete."
   build:
     commands:
+      # Command to run esbuild according to the specified Metadata options
+      - esbuild app.ts --bundle --minify --sourcemap --target=es2020 --outfile=out.js
       # Use AWS SAM to package the application by using AWS CloudFormation
       - aws cloudformation package --template template.yaml --s3-bucket $S3_BUCKET --output-template template-export.yml
 artifacts:
   type: zip
   files:
+    - out.js
     - template-export.yml
