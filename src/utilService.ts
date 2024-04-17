@@ -2,6 +2,9 @@ import { utils } from 'crawlee'
 import {Page} from "playwright";
 import moment from "moment";
 
+// global counter to keep track of how many times the snapshot function has been called
+let snapshotCounter = 0
+
 export const UtilService = {
   log: (message: string, data?: Record<string, any> | null) => {
     utils.log.info(`[${moment().toISOString()}] ${message}`, data)
@@ -12,6 +15,11 @@ export const UtilService = {
     UtilService.log('sleep end')
   },
   snapshot: async (page: Page, key?: string) => {
+    snapshotCounter++
+
+
+
+
     UtilService.log('스냅샷 촬영 시작')
     // const title = await page.title();
     const title = ''
@@ -20,8 +28,10 @@ export const UtilService = {
     const currentTimeInIsoString = moment().toISOString();
 
 
-
-    await utils.puppeteer.saveSnapshot(page, { key: `${currentTimeInIsoString}---${title}---${key}`, saveHtml: true })
+    // set counter indicater
+    await utils.puppeteer.saveSnapshot(page, { key: `${currentTimeInIsoString}---${title}---${key}---${
+          "("+snapshotCounter+")"
+      }`, saveHtml: true })
     UtilService.log('스냅샷 촬영 완료')
     const pages = ( page.context()).pages()
     UtilService.log(`pages.length: ${pages.length}`)
