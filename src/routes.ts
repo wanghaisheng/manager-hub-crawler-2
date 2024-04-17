@@ -25,7 +25,7 @@ router.use(async (ctx) => {
         UtilService.log('match', {url: ctx.request.url, glob: '**/sschkiss'});
 
         // delay 30s
-        await UtilService.sleep(2000);
+        await UtilService.sleep(1000*30);
     }
 
 
