@@ -4,6 +4,7 @@
     "type": "module",
     "description": "This is an example of a Crawlee project.",
     "dependencies": {
+        "@sparticuz/chromium": "^123.0.1",
         "crawlee": "^3.0.0",
         "moment": "^2.30.1",
         "nanoid": "^5.0.7",
